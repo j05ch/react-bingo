@@ -3,11 +3,12 @@ import styles from './index.module.scss';
 
 
 
-function Tile({ id, children, onToggle, isSet }) {
-    const myStyles = isSet ? `styles['tile--set']` : styles.tile;
+function Tile({ id, children, mark, isSet }) {
+    const myStyles = isSet ? styles.tileset : styles.tile;
+    console.log(isSet); 
     
       return (
-        <div onClick={onToggle} className={myStyles}>
+        <div onClick={mark} className={myStyles}>
           {children}
         </div>
       );
