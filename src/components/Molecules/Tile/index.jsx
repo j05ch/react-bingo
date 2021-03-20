@@ -5,10 +5,10 @@ import styles from './index.module.scss';
 
 function Tile({ id, children, mark, isSet }) {
     const myStyles = isSet ? styles.tileset : styles.tile;
-    console.log(isSet); 
+    console.log(id); 
     
       return (
-        <div onClick={mark} className={myStyles}>
+        <div onClick={mark} className={myStyles} id={id}>
           {children}
         </div>
       );
