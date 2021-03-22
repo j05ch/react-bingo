@@ -56,7 +56,7 @@ function checkDiagonal(arr) {
         && arr[12] === M
         && arr[16] === M
         && arr[20] === M
-    ) winner.push('diagonal-1');
+    ) winner.push('diagonal-2');
 
     return winner;
 }
