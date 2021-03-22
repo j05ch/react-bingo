@@ -8,21 +8,34 @@ import Button from "../../atoms/button";
 
 function Game() {
     const [markedTiles, setMarkedTiles] = useState(Array(25).fill(UM));
-
-    useEffect(() => {
-        mark(MIDDLE);
-    }, []);
-
-    useEffect(() => {
-        // check here for win and do something with it:
-            console.log("WINNER: ", checkForWin(markedTiles));
-        }
-        , [markedTiles]);
-
     const [data, setData] = useState(shuffle(content).reduce(
         (data, value, index) => ({...data, [index]: value}),
         {}
     ));
+    const [state, setState] = useState(3);
+    const [bingos, setBingos] = useState([]);
+
+    useEffect(() => {
+        const tempArr = [...markedTiles];
+        tempArr[MIDDLE] = M;
+        setMarkedTiles(tempArr);
+        setData({...data, [MIDDLE]: 'Some text'})
+    }, []);
+
+    useEffect(() => {
+            const checked = checkForWin(markedTiles);
+            // If there is a new bingo you should fire your confetti or whatever
+            console.log("NEW BINGO: ", !arrayEquals(checked, bingos));
+            setBingos(checked);
+        }
+        , [markedTiles]);
+
+    function arrayEquals(a, b) {
+        return Array.isArray(a) &&
+            Array.isArray(b) &&
+            a.length === b.length &&
+            a.every((val, index) => val === b[index]);
+    }
 
     function mark(id) {
         const marked = [...markedTiles];
@@ -30,8 +43,22 @@ function Game() {
         setMarkedTiles(marked);
     }
 
+    function tinkerState() {
+        setState(state + 3);
+        setState(state + 5);
+        console.log("STATE", state);
+    }
+
     function resetGame() {
-        setMarkedTiles(Array(25).fill(UM));
+        const tempArr = Array(25).fill(UM);
+        tempArr[MIDDLE] = M;
+        setMarkedTiles(tempArr);
+        const tempData = shuffle(content).reduce(
+            (data, value, index) => ({...data, [index]: value}),
+            {}
+        );
+        setData({...tempData, [MIDDLE]: 'Some text'});
+        tinkerState();
     }
 
     return (
@@ -49,8 +76,7 @@ function Game() {
                 )}
             </div>
 
-            <Button label={"Reset"} onClick={resetGame} />
-            {/*<button className={styles.btn}>Reset</button>*/}
+            <Button label={"Reset"} onClick={resetGame}/>
         </div>
     );
 }
