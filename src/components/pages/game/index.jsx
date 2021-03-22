@@ -43,12 +43,6 @@ function Game() {
         setMarkedTiles(marked);
     }
 
-    function tinkerState() {
-        setState(state + 3);
-        setState(state + 5);
-        console.log("STATE", state);
-    }
-
     function resetGame() {
         const tempArr = Array(25).fill(UM);
         tempArr[MIDDLE] = M;
@@ -58,7 +52,7 @@ function Game() {
             {}
         );
         setData({...tempData, [MIDDLE]: 'Some text'});
-        tinkerState();
+        setBingos([]);
     }
 
     return (
